@@ -5,6 +5,16 @@ differing capabilities of compute. We use [[https://github.com/NixOS/nixops][nix
 declare the machine(s) configuration. The =common= directory is used
 to show similar configuration can be shared between deployments.
 
+This deployment is opinionated. We provide a consistent environment
+across multiple architectures.
+ - provide many customizable kernel environments: [[https://github.com/ipython/ipykernel][Python]](2, 3.7, 3.8),
+   [[https://github.com/brendan-rius/jupyter-c-kernel][C]], [[https://github.com/google/evcxr][rust]], [[https://github.com/IRkernel/IRkernel][R]], [[https://github.com/ansible/ansible-jupyter-kernel][Ansible]], [[https://github.com/GTrunSec/nix-kernel][Nix]], [[https://github.com/takluyver/bash_kernel][Bash]], [[https://github.com/sciruby/iruby][Ruby]]
+ - user configuration [[file:common/users.nix]]
+ - jupyterhub
+   - simple :: PAM authentication, SystemD spawner
+   - slurm :: PAM authentication, Batchspawner(slurm) spawner
+
+
 ** Usage
 
 In general nixops has a few useful commands. In addition we are using
