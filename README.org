@@ -1,0 +1,83 @@
+* Data Science Deployments
+
+These are recipes for deploying data science environments that provide
+differing capabilities of compute. We use [[https://github.com/NixOS/nixops][nixops]] to reproducibly
+declare the machine(s) configuration. The =common= directory is used
+to show similar configuration can be shared between deployments.
+
+** Usage
+
+In general nixops has a few useful commands. In addition we are using
+=libvirt= for testing but nixops is also capable of cloud
+deployments. We first create the deployment.
+
+#+begin_src shell
+  nixops create -d <deployment-name> <path to deployment.nix>
+#+end_src
+
+We can view our deployment.
+
+#+begin_src shell
+  nixops list
+#+end_src
+
+Next we deploy
+
+#+begin_src shell
+  nixops deploy -d <deployment-name>
+#+end_src
+
+Finally we can access information about the deployment
+
+#+begin_src shell
+  nixops info -d <deployment-name>
+#+end_src
+
+** Deployment
+*** Simple
+
+The simple deployment is a single node deployment of jupyterhub with
+many kernels available in [[file:kernels.nix]]. Deployment takes around 2
+minutes.
+
+Create
+
+#+begin_src shell
+  nixops create -d simple simple/deployment.nix
+#+end_src
+
+Deploy
+
+#+begin_src shell
+  nixops deploy -d simple
+#+end_src
+
+Info
+
+#+begin_src shell
+  nixops info -d simple
+#+end_src
+
+** Slurm
+
+Multi-node deployment of jupyterhub with identical development
+environment to the =simple= deployment. Uses slurm for the
+distribution of user jobs. Deployment takes around 5 minutes.
+
+Create
+
+#+begin_src shell
+  nixops create -d slurm slurm/deployment.nix
+#+end_src
+
+Deploy
+
+#+begin_src shell
+  nixops deploy -d slurm
+#+end_src
+
+Info
+
+#+begin_src shell
+  nixops info -d slurm
+#+end_src
