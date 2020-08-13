@@ -1,18 +1,23 @@
-{ pkgs, jupyterhubEnvironment, jupyterlabEnvironment, jupyterlabKernels }:
+{ pkgs, jupyterhubTokens, jupyterhubEnvironment, jupyterlabEnvironment, jupyterlabKernels }:
 
 let jupyterhubConfig = pkgs.writeText "jupyterhub_config.py" ''
       c.JupyterHub.hub_ip = "0.0.0.0"
       c.JupyterHub.authentication_class = "jupyterhub.auth.PAMAuthenticator"
-
-      import batchspawner
       c.JupyterHub.spawner_class = 'batchspawner.SlurmSpawner'
+
+      c.JupyterHub.services = [
+      ${(pkgs.lib.concatStringsSep "\n"
+          (pkgs.stdenv.lib.mapAttrsToList
+            (name: value: "  {'name': '${name}', 'api_token': '${value}'},")
+            jupyterhubTokens))}
+      ]
+
       c.SlurmSpawner.default_url = '/lab'
       c.SlurmSpawner.environment = {
         'JUPYTER_PATH': '${jupyterlabKernels}'
       }
       c.SlurmSpawner.batchspawner_singleuser_cmd = '${jupyterlabEnvironment}/bin/batchspawner-singleuser'
       c.SlurmSpawner.cmd = "${jupyterlabEnvironment}/bin/.jupyterhub-singleuser-wrapped"
-
       c.SlurmSpawner.batch_script = """#!/usr/bin/env bash
       #SBATCH --output={{homedir}}/.jupyterhub_slurmspawner_%j.log
       #SBATCH --job-name=spawner-jupyterhub

@@ -5,6 +5,12 @@ differing capabilities of compute. We use [[https://github.com/NixOS/nixops][nix
 declare the machine(s) configuration. The =common= directory is used
 to show similar configuration can be shared between deployments.
 
+In nix since each kernel is an encapsulated kernel environment we
+should use the name =kernel= and =environment=
+interchangeably. Meaning that creating a new environment for users is
+the same as creating an additional kernel. [[https://docs.conda.io/en/latest/][Conda]] has taken a similar
+approach with [[https://github.com/Anaconda-Platform/nb_conda_kernels][nb_conda_kernels]].
+
 This deployment is opinionated. We provide a consistent environment
 across multiple architectures.
  - provide many customizable kernel environments: [[https://github.com/ipython/ipykernel][Python]](2, 3.7, 3.8),
@@ -91,3 +97,8 @@ Info
 #+begin_src shell
   nixops info -d slurm
 #+end_src
+
+*** Issues to upstream
+
+ - dask-gateway-scheduler, dask-gateway-worker now no longer being default (which is awesome)
+ - nfs shared home directory between users is a requirement that is not documented for jobqueue

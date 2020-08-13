@@ -15,7 +15,7 @@
 
   python37Kernel = (
     let env = pkgs.python37.withPackages(p: with p; [
-          ipykernel numpy scipy
+          ipykernel dask-gateway numpy scipy
         ]);
     in {
       displayName = "Python 3.7";
@@ -27,7 +27,7 @@
 
   python38Kernel = (
     let env = pkgs.python38.withPackages(p: with p; [
-          ipykernel numpy scipy numba nixpkgs
+          ipykernel dask-gateway numpy scipy
         ]);
     in {
       displayName = "Python 3.8";
