@@ -102,3 +102,4 @@ Info
 
  - dask-gateway-scheduler, dask-gateway-worker now no longer being default (which is awesome)
  - nfs shared home directory between users is a requirement that is not documented for jobqueue
+ - dashboard does not show up at the moment https://github.com/dask/distributed/issues/3741
