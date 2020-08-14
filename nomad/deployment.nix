@@ -7,6 +7,8 @@ let pkgs = import <nixpkgs> { };
       ];
 
       networking.firewall.enable = false;
+
+      virtualisation.docker.enable = true;
     };
 
     clientMachine = {
@@ -17,6 +19,8 @@ let pkgs = import <nixpkgs> { };
       ];
 
       networking.firewall.enable = false;
+
+      virtualisation.docker.enable = true;
     };
 in {
   nomad01 = serverMachine;
