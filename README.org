@@ -74,7 +74,7 @@ Info
   nixops info -d simple
 #+end_src
 
-** Slurm
+*** Slurm
 
 Multi-node deployment of jupyterhub with identical development
 environment to the =simple= deployment. Uses slurm for the
@@ -98,8 +98,27 @@ Info
   nixops info -d slurm
 #+end_src
 
-*** Issues to upstream
+**** Issues to upstream
 
  - dask-gateway-scheduler, dask-gateway-worker now no longer being default (which is awesome)
  - nfs shared home directory between users is a requirement that is not documented for jobqueue
  - dashboard does not show up at the moment https://github.com/dask/distributed/issues/3741
+*** Nomad
+
+Create
+
+#+begin_src shell
+  nixops create -d nomad nomad/deployment.nix
+#+end_src
+
+Deploy
+
+#+begin_src shell
+  nixops deploy -d nomad
+#+end_src
+
+Info
+
+#+begin_src shell
+  nixops info -d nomad
+#+end_src
